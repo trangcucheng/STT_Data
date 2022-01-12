@@ -1,0 +1,80 @@
+@font-face {
+    font-family: "Roboto";
+    src: url('/static/css/fonts/font-family/Quicksand-Medium.ttf');
+}
+
+*{
+    font-family: 'Roboto';
+    box-sizing: border-box;
+    margin: auto;
+    padding: auto;
+}
+
+
+div.clearfix{
+    clear: both;
+}
+
+table,td,th{
+    border: 1px solid black;
+}
+
+table{
+    width: 100%;
+    margin-top: 30px;
+}
+input{
+    border-style: hidden;
+}
+
+header{
+    height: 70px;
+    background-color: #008B8B;
+}
+
+button#logout a{
+    color: #000;
+    text-decoration: none;
+}
+
+button#logout{
+    height: 30px;
+    float: right;
+    margin-right: 15px;
+    margin-top: 20px;
+    width: 100px;
+    font-size: 15px;
+}
+
+div.container{
+    width: 80%;
+    background: url('/static/css/images/bg.jpg') top center;
+    background-size: cover;
+    min-height: 1280px;
+}
+
+#inputHeading,.form-group{
+    text-align: center;
+}
+
+#numVid{
+    margin-top: 5px;
+    border: 1px solid #ccc;
+}
+
+.name, .url{
+    width: 35%;
+}
+
+.name input, .url input{
+    width: 100%;
+}
+
+#btnSubmit{
+    margin-top: 30px;
+}
+
+#btnSubmit:hover{
+    cursor: pointer;
+    margin: auto;
+}

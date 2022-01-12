@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/login.css">
+    <title>Register - Split Audios </title>
+</head>
+<body>
+    <div class="register-container">
+        <div class="heading">
+            <h3>
+                Welcome!
+            </h3>
+        </div>
+        <form action="/register" method='POST'>
+            <div class="form-group row">
+                <label for="username" class="col col-3">Tên đăng nhập: </label>
+                <input type="text" name="username" id="username" class="col col-7" required>
+            </div>
+            <div class="form-group row">
+                <label for="password" class="col col-3">Mật khẩu: </label>
+                <input type="text" name="password" id="password" class="col col-7" required>
+            </div>
+            <div class="form-group row">
+                <label for="confirm_password" class="col col-3">Xác nhận mật khẩu:</label>
+                <input type="text" name="confirm_password" id="confirm_password" class="col col-7" required>
+            </div>
+            <div class="form-group row">
+                <input type="submit" value="Đăng ký" id="submitBtn">
+            </div>
+        </form>
+        <p class="wrong-register">{{msg}}</p>
+    </div>
+</body>
+</html>

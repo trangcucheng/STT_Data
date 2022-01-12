@@ -1,0 +1,9 @@
+- khi đăng nhập với tư cách người dùng: 
+	cho phép paste links video tìm được và 
+	những thông tin có liên quan đến video ( tên video, thời gian, giọng đọc, vùng miền, chủ đề ). 
+	Mọi thông tin người dùng nhập vào đều được lưu vào csdl
+
+- khi đăng nhập với tư cách admin (TĐN: admin, mk: 0):
+	cho phép thống kê các videos, các audios đã tải về, các audios chưa được tải, chưa được tách
+	với bảng những videos chưa tải: sau khi admin tải xong thì paste tên file đã tải về => lưu vào csdl
+	với những audios đã tách rồi cho phép nghe những đoạn nhỏ được tách ra

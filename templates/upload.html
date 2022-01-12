@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/upload.css">
+    <title>Upload Links</title>
+    <script>
+        var username = "{{username}}";
+    </script>
+</head>
+<body>
+    <header>
+        <div>
+            <button id="logout"><a href="{{url_for('logout')}}">Thoát</a></button>
+        </div>
+        <div class="clearfix"></div>
+       </header>
+   <div class="container">    
+        <h2>Xin chào {{username}}!</h2>
+        <p>Số video bạn đã nhập: {{num}}</p>
+        <h4 id="inputHeading">Nhập thông tin</h4>
+        <div class="form-group">
+            <label for="numVid">Nhập số lượng video</label>
+            <input type="number" min="1" max="100" value="1" id="numVid" />
+        </div>
+        <table id="myTable">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th class="name">Tên video</th>
+                    <th class="url">Đường dẫn</th>
+                    <th>Thời gian</th>
+                    <th>Giọng đọc</th>
+                    <th>Vùng miền</th>
+                    <th>Chủ đề</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+        <div style="text-align: center">
+            <button type="submit" id="btnSubmit">Tải lên</button>
+        </div>
+</div>
+
+
+    <script src="/static/js/jquery_321/jquery-3.2.1.js"></script>
+    <script>
+        $(document).ready(function(){
+            var numVid = $("#numVid").val();
+            console.log(numVid);
+            show(numVid);
+            $("#numVid").change(function() {
+                show($(this).val());
+            });
+
+            $("#btnSubmit").click(function(){
+                let numVid_=$("#numVid").val();
+                var names = $('input[name="listNames[]"]').map(function(){
+                    return $(this).val()
+                }).get();
+                var links = $('input[name="listLinks[]"]').map(function(){
+                    return $(this).val()
+                }).get();
+                var times = $('input[name="listTimes[]"]').map(function(){
+                    return $(this).val()
+                }).get();
+                var voices = $('select[name="listVoices[]"]').map(function(){
+                    return $(this).val()
+                }).get();
+                var genders = $('select[name="listGenders[]"]').map(function(){
+                    return $(this).val()
+                }).get();
+                var topics = $('select[name="listTopics[]"]').map(function(){
+                    return $(this).val()
+                }).get();
+            
+                if (names.length<numVid_ || links.length<numVid_ || times.length<numVid_ || voices.length<numVid_ || genders.length<numVid_ || topics.length<numVid_){
+                    alert('Vui lòng nhập đầy đủ thông tin của các video!')
+                    return;
+                }
+                $.ajax({
+                    url: '/saveLinks',
+                    type: 'post',
+                    data: {
+                        numVid_: JSON.stringify(numVid_),
+                        username: JSON.stringify(username),
+                        names: JSON.stringify(names),
+                        links: JSON.stringify(links),
+                        times: JSON.stringify(times),
+                        voices: JSON.stringify(voices),
+                        genders: JSON.stringify(genders),
+                        topics: JSON.stringify(topics)
+                    },
+                    dataType: "json",
+                    success: function(res){
+                        if (res.status){
+                            alert("Lưu thành công!");
+                            window.location.reload();
+                        }
+                    },
+                    error: function(error){
+                        console.log(error);
+                    }
+                })
+            })
+
+        });
+
+        function show(numVid){
+            $("#tbody").html('');
+            for (let i=1; i<= numVid; i++){
+                let res = '<tr class="listVids[]">\
+                    <td>'+i+'</td>\
+                    <td class="name"><input type="text" name="listNames[]"></td>\
+                    <td class="url"><input type="text" name="listLinks[]"></td>\
+                    <td><input type="text" name ="listTimes[]"></td>\
+                    <td><select name = "listGenders[]">\
+                        <option value="nam">Nam</option>\
+                        <option value="nu">Nữ</option>\
+                        <option value="nam nu">Cả hai</option>\
+                        </select>\
+                    </td>\
+                    <td><select name="listVoices[]">\
+                        <option value="mien_bac">Miền Bắc</option>\
+                        <option value="mien_trung">Miền Trung</option>\
+                        <option value="mien_nam">Miền Nam</option>\
+                        </select>\
+                    </td>\
+                    <td><select name="listTopics[]" >\
+                        <option value="giao_duc">Giáo dục</option>\
+                        <option value="ky_nang_song">Kỹ năng sống</option>\
+                        <option value="kinh_te">Kinh tế</option>\
+                        <option value="phap_luat">Pháp luật</option>\
+                        <option value="doi_song">Đời sống</option>\
+                        <option value="dao_phat">Đạo Phật</option>\
+                        <option value="thoi_tiet">Thời tiết</option>\
+                        <option value="thoi_su">Thời sự</option>\
+                        <option value="quan_su">Quân sự</option>\
+                        <option value="chinh_tri">Chính trị</option>\
+                        <option value="nong_nghiep">Nông nghiệp</option>\
+                        <option value="tin_tong_hop">Tin tổng hợp</option>\
+                        <option value="giao_thong">Giao thông</option>\
+                        <option value="y_te">Y tế</option>\
+                        <option value="khoa_hoc">Khoa học</option>\
+                        <option value="the_thao">Thể thao</option>\
+                        <option value="am_thuc">Ẩm thực</option>\
+                        <option value="du_lich">Du lịch</option>\
+                        <option value="tinh_yeu">Tình yêu</option>\
+                        <option value="giai_tri">Giải trí</option>\
+                        <option value="lich_su">Lịch sử</option>\
+                        <option value="kinh_doanh">Kinh doanh</option>\
+                    </tr>'
+                $("#tbody").append(res);
+
+            }
+        }
+
+    </script>
+
+</body>
+</html>

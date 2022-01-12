@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/admin.css">
+    <title>Admin</title>
+</head>
+<body>
+    <header>
+        <ul class="options-container">
+            <li id="all" class="table-control"><button>Thống kê chung</button></li>
+            <li id="undownloaded" class="table-control"><button>Video chưa tải về</button></li>
+            <li id="downloaded" class="table-control"><button>Video đã tải về</button></li>
+            <li id="splited" class="table-control"><button>Video đã tách</button></li>
+            <li><button id="logout"><a href="{{url_for('logout')}}">Thoát</a></button></li>
+        </ul>
+    </header>
+    <div class="container">
+        <h3>Xin chào Admin!</h3>
+        <h3>Thống kê các video</h3>
+        
+        <!-- bảng thống kê chung -->
+        <div class="table-container" id="table1" style="display:none" >
+            <h3>Bảng thống kê chung</h3>
+            <button><a href="{{url_for('download',temp=1)}}">Tải xuống</a></button>
+            <input type="text" id="myInput1" onkeyup="myFunction()" placeholder="Nhập từ khóa tìm kiếm...">
+            <table class="myTable" style="width:80%">
+                <tr class="header">
+                    <th>STT</th>
+                    <th style="width:20%;">Tên video</th>
+                    <th style="width:20%">Links</th>
+                    <th>Thời gian</th>
+                    <th>Giọng đọc</th>
+                    <th>Vùng miền</th>
+                    <th>Chủ đề</th>
+                    <th>Tải xuống</th>
+                    <th>Ghi chú</th>
+                </tr>
+                <tbody id="myTable1">
+                {% for item in links%}
+                    <tr>
+                        <td>{{item[0]}}</td>
+                        <td>{{item[1]}}</td>
+                        <td>{{item[2]}}</td>
+                        <td>{{item[3]}}</td>
+                        <td>{{item[4]}}</td>
+                        <td>{{item[5]}}</td>
+                        <td>{{item[6]}}</td>
+                        <td>{{item[8]}}</td>
+                        <td>{{item[9]}}</td>
+                    </tr>
+                {%endfor%}
+            
+                </tbody>
+            </table>
+        </div>
+
+        <!-- bảng các video chưa tải về -->
+        <div class="table-container" id="table2" style="display:none">
+            <h3>Bảng thống kê các video chưa tải về</h3>
+            <button><a href="{{url_for('download',temp=2)}}">Tải xuống</a></button>
+            <input type="text" id="myInput2" onkeyup="myFunction()" placeholder="Nhập từ khóa tìm kiếm...">
+            <table class="myTable" style="width:80%">
+                <tr class="header">
+                    <th>STT</th>
+                    <th style="width:20%;">Tên video</th>
+                    <th style="width:20%">Links</th>
+                    <th>Thời gian</th>
+                    <th>Giọng đọc</th>
+                    <th>Vùng miền</th>
+                    <th>Chủ đề</th>
+                    <th>Tải về</th>
+                </tr>
+                <tbody id="myTable2">
+                {% for item in undownloaded_videos%}
+                    <tr>
+                        <td>{{item[0]}}</td>
+                        <td>{{item[1]}}</td>
+                        <td>{{item[2]}}</td>
+                        <td>{{item[3]}}</td>
+                        <td>{{item[4]}}</td>
+                        <td>{{item[5]}}</td>
+                        <td>{{item[6]}}</td>
+                        <td>
+                            <input name="isDownload[]" type="checkbox" class="{{item[0]}}">
+                        </td>
+                    </tr>
+                {%endfor%}
+            
+                </tbody>
+            </table>
+            <button id="saveDownload">Lưu lại</button>
+        </div>
+
+        <!-- bảng các video đã tải về -->
+        <div class="table-container" id="table3" style="display:none">
+            <h3>Bảng thống kê các video đã tải về</h3>
+            <button><a href="{{url_for('download',temp=3)}}">Tải xuống</a></button>
+            <input type="text" id="myInput3" onkeyup="myFunction()" placeholder="Nhập từ khóa tìm kiếm...">
+            <table class="myTable" style="width:80%">
+                <tr class="header">
+                    <th>STT</th>
+                    <th style="width:20%;">Tên video</th>
+                    <th>Thời gian</th>
+                    <th>Giọng đọc</th>
+                    <th>Vùng miền</th>
+                    <th>Chủ đề</th>
+                    <th>Nghe thử</th>
+                    <th>Tách</th>
+                    <th>Ghi chú</th>
+                </tr>
+                <tbody id="myTable3">
+                {% for i in range(0,downloaded_videos_num)%}
+                    <tr>
+                        <td>{{i}}</td>
+                        <td>{{downloaded_videos[i][1]}}</td>
+                        <td>{{downloaded_videos[i][2]}}</td>
+                        <td>{{downloaded_videos[i][3]}}</td>
+                        <td>{{downloaded_videos[i][4]}}</td>
+                        <td>{{downloaded_videos[i][5]}}</td>
+                        <td><audio controls>
+                                <source src="{{downloaded_videos[i][6]}}" type="audio/mpeg">
+                            </audio></td>
+                        <td>
+                            <input type="checkbox" name="isSplited[]" value="{{downloaded_videos[i][7]}}" >
+                        </td>
+                        {%if downloaded_videos[i][8] == 'splited' %}
+                        <td>Da tach</td>
+                        {%else%}
+                        <td>Chua tach</td>
+                        {%endif%}
+                    </tr>
+                {%endfor%}
+            
+                </tbody>
+            </table>
+            <button id="splitedBtn">Lưu lại</button>
+        </div>
+
+        <!-- bảng các video đã tách -->
+        <div class="table-container" id="table4" style="display:none">
+            <h3>Bảng các video đã được tách</h3>
+            <button><a href="{{url_for('download',temp=3)}}">Tải xuống</a></button>
+            <input type="text" id="myInput4" onkeyup="myFunction()" placeholder="Nhập từ khóa tìm kiếm...">
+            <table class="myTable" style="width:80%">
+                <tr class="header">
+                    <th>STT</th>
+                    <th style="width:20%;">Tên video</th>
+                    <th style="width:20%">Links</th>
+                    <th>Thời gian</th>
+                    <th>Giọng đọc</th>
+                    <th>Vùng miền</th>
+                    <th>Chủ đề</th>
+                    <th>Tải xuống</th>
+                    <th>Ghi chú</th>
+                </tr>
+                <tbody id="myTable4">
+                {% for item in splited_videos%}
+                    <tr>
+                        <td>{{item[0]}}</td>
+                        <td>{{item[1]}}</td>
+                        <td>{{item[2]}}</td>
+                        <td>{{item[3]}}</td>
+                        <td>{{item[4]}}</td>
+                        <td>{{item[5]}}</td>
+                        <td>{{item[6]}}</td>
+                        <td>{{item[8]}}</td>
+                        <td><a href="{{url_for('each_audio',id=item[0])}}">Chi tiết</a></td>
+                    </tr>
+                {%endfor%}
+            
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <script src="/static/js/jquery_321/jquery-3.2.1.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#table1").show();
+            $("#all").click(function(){
+                $(".table-container").hide();
+                $("#table1").show();
+            })
+            $("#undownloaded").click(function(){
+                $(".table-container").hide();
+                $("#table2").show();
+            })
+            $("#downloaded").click(function(){
+                $(".table-container").hide();
+                $("#table3").show();
+            })
+            $("#splited").click(function(){
+                $(".table-container").hide();
+                $("#table4").show();
+            })
+            // bảng thống kê chung
+            $('#myInput1').on('keyup', function(event) {
+                event.preventDefault();
+                /* Act on the event */
+                var tukhoa = $(this).val().toLowerCase();
+                $('#myTable1 tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(tukhoa)>-1);
+                });
+            });
+            // bảng các video chưa tải về
+            $('#myInput2').on('keyup', function(event) {
+                event.preventDefault();
+                /* Act on the event */
+                var tukhoa = $(this).val().toLowerCase();
+                $('#myTable2 tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(tukhoa)>-1);
+                });
+            });
+
+            // bảng các video đã tải về
+            $('#myInput3').on('keyup', function(event) {
+                event.preventDefault();
+                /* Act on the event */
+                var tukhoa = $(this).val().toLowerCase();
+                $('#myTable3 tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(tukhoa)>-1);
+                });
+            });
+
+            // bảng các video đã tách
+            $('#myInput4').on('keyup', function(event) {
+                event.preventDefault();
+                /* Act on the event */
+                var tukhoa = $(this).val().toLowerCase();
+                $('#myTable4 tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(tukhoa)>-1);
+                });
+            });
+
+            // lưu lại những video đã tải rồi
+            $('#saveDownload').click(function(){
+                var filenames= new Array()
+                var isDownload = $('input[name="isDownload[]"]:checked').map(function(){
+                    if ($(this).val()!=""){
+                        filenames.push($(this).val())
+                        return $(this).attr('class');
+                    }
+                }).get();
+
+               
+                console.log("day ne");
+                console.log(isDownload);
+                $.ajax({
+                    url: '/saveDownload',
+                    type: 'post',
+                    data: {
+                        isDownload: JSON.stringify(isDownload),
+                    },
+                    dataType: "json",
+                    success: function(res){
+                        if (res.status){
+                            alert("Lưu thành công!");
+                            window.location.reload();
+                        }
+                    },
+                    error: function(error){
+                        console.log(error)
+                    }
+
+                })
+            })
+            
+            $('#splitedBtn').click(function(){
+                var splited_arr= $('input[name="isSplited[]"]:checked').map(function(){
+                    return $(this).val();
+                }).get();
+                $.ajax({
+                    url: '/split_audios',
+                    type: 'post',
+                    data: {
+                        splited_arr: JSON.stringify(splited_arr)
+                    },
+                    dataType: "json",
+                    success: function(res){
+                        if (res.status){
+                            alert("Lưu thành công!");
+                            window.location.reload();
+                        }
+                    },
+                    error: function(error){
+                        console.log(error)
+                    }
+                })
+            })
+        });
+    </script>
+</body>
+</html>
