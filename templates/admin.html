@@ -5,6 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/admin.css">
+    <script src="../static/js/jquery_321/jquery-3.2.1.js"></script>
+    <link rel="stylesheet" href="../static/js/DataTables/datatables.min.css">
+    <script src="../static/js/DataTables/datatables.min.js"></script>
+    <script src="../static/js/DataTables/DataTables-1.11.3/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#table_no1').dataTable({});
+            $('#table_no2').dataTable({});
+            $('#table_no3').dataTable({});
+            $('#table_no4').dataTable({});
+        })
+    </script>
     <title>Admin</title>
 </head>
 <body>
@@ -23,24 +35,26 @@
         
         <!-- bảng thống kê chung -->
         <div class="table-container" id="table1" style="display:none" >
-            <h3>Bảng thống kê chung</h3>
-            <button><a href="{{url_for('download',temp=1)}}">Tải xuống</a></button>
-            <input type="text" id="myInput1" onkeyup="myFunction()" placeholder="Nhập từ khóa tìm kiếm...">
-            <table class="myTable" style="width:80%">
-                <tr class="header">
-                    <th>STT</th>
-                    <th style="width:20%;">Tên video</th>
-                    <th style="width:20%">Links</th>
-                    <th>Thời gian</th>
-                    <th>Giọng đọc</th>
-                    <th>Vùng miền</th>
-                    <th>Chủ đề</th>
-                    <th>Tải xuống</th>
-                    <th>Ghi chú</th>
-                </tr>
+            <div class="table-heading">
+                <p class="table-name">Bảng thống kê chung</p>
+                <button class="downloadBtn"><a href="{{url_for('download',temp=1)}}">Tải xuống</a></button>
+            </div>
+            <table class="myTable" id="table_no1">
+                <thead>
+                    <tr class="header thead">
+                        <th>STT</th>
+                        <th style="width:30%;">Tên video</th>
+                        <th style="width:30%">Links</th>
+                        <th>Thời gian</th>
+                        <th>Giọng đọc</th>
+                        <th>Vùng miền</th>
+                        <th>Chủ đề</th>
+                        <th>Ghi chú</th>
+                    </tr>
+                </thead>
                 <tbody id="myTable1">
                 {% for item in links%}
-                    <tr>
+                    <tr class="tbody">
                         <td>{{item[0]}}</td>
                         <td>{{item[1]}}</td>
                         <td>{{item[2]}}</td>
@@ -49,7 +63,6 @@
                         <td>{{item[5]}}</td>
                         <td>{{item[6]}}</td>
                         <td>{{item[8]}}</td>
-                        <td>{{item[9]}}</td>
                     </tr>
                 {%endfor%}
             
@@ -59,20 +72,23 @@
 
         <!-- bảng các video chưa tải về -->
         <div class="table-container" id="table2" style="display:none">
-            <h3>Bảng thống kê các video chưa tải về</h3>
-            <button><a href="{{url_for('download',temp=2)}}">Tải xuống</a></button>
-            <input type="text" id="myInput2" onkeyup="myFunction()" placeholder="Nhập từ khóa tìm kiếm...">
-            <table class="myTable" style="width:80%">
-                <tr class="header">
-                    <th>STT</th>
-                    <th style="width:20%;">Tên video</th>
-                    <th style="width:20%">Links</th>
-                    <th>Thời gian</th>
-                    <th>Giọng đọc</th>
-                    <th>Vùng miền</th>
-                    <th>Chủ đề</th>
-                    <th>Tải về</th>
-                </tr>
+            <div class="table-heading">
+                <p class="table-name">Bảng thống kê các video chưa tải về</p>
+                <button class="downloadBtn"><a href="{{url_for('download',temp=2)}}">Tải xuống</a></button>
+            </div>
+            <table class="myTable" id="table_no2">
+                <thead>
+                    <tr class="header thead">
+                        <th>STT</th>
+                        <th style="width:30%;">Tên video</th>
+                        <th style="width:30%">Links</th>
+                        <th>Thời gian</th>
+                        <th>Giọng đọc</th>
+                        <th>Vùng miền</th>
+                        <th>Chủ đề</th>
+                        <th>Tải về</th>
+                    </tr>
+                </thead>
                 <tbody id="myTable2">
                 {% for item in undownloaded_videos%}
                     <tr>
@@ -96,21 +112,24 @@
 
         <!-- bảng các video đã tải về -->
         <div class="table-container" id="table3" style="display:none">
-            <h3>Bảng thống kê các video đã tải về</h3>
-            <button><a href="{{url_for('download',temp=3)}}">Tải xuống</a></button>
-            <input type="text" id="myInput3" onkeyup="myFunction()" placeholder="Nhập từ khóa tìm kiếm...">
-            <table class="myTable" style="width:80%">
-                <tr class="header">
-                    <th>STT</th>
-                    <th style="width:20%;">Tên video</th>
-                    <th>Thời gian</th>
-                    <th>Giọng đọc</th>
-                    <th>Vùng miền</th>
-                    <th>Chủ đề</th>
-                    <th>Nghe thử</th>
-                    <th>Tách</th>
-                    <th>Ghi chú</th>
-                </tr>
+            <div class="table-heading">
+                <p class="table-name">Bảng thống kê các video đã tải về</p>
+                <button class="downloadBtn"><a href="{{url_for('download',temp=3)}}">Tải xuống</a></button>
+            </div>
+            <table class="myTable" id="table_no3" >
+                <thead>
+                    <tr class="header thead">
+                        <th>STT</th>
+                        <th style="width:30%;">Tên video</th>
+                        <th>Thời gian</th>
+                        <th>Giọng đọc</th>
+                        <th>Vùng miền</th>
+                        <th>Chủ đề</th>
+                        <th>Nghe thử</th>
+                        <th>Tách</th>
+                        <th>Ghi chú</th>
+                    </tr>
+                </thead>
                 <tbody id="myTable3">
                 {% for i in range(0,downloaded_videos_num)%}
                     <tr>
@@ -141,21 +160,24 @@
 
         <!-- bảng các video đã tách -->
         <div class="table-container" id="table4" style="display:none">
-            <h3>Bảng các video đã được tách</h3>
-            <button><a href="{{url_for('download',temp=3)}}">Tải xuống</a></button>
-            <input type="text" id="myInput4" onkeyup="myFunction()" placeholder="Nhập từ khóa tìm kiếm...">
-            <table class="myTable" style="width:80%">
-                <tr class="header">
-                    <th>STT</th>
-                    <th style="width:20%;">Tên video</th>
-                    <th style="width:20%">Links</th>
-                    <th>Thời gian</th>
-                    <th>Giọng đọc</th>
-                    <th>Vùng miền</th>
-                    <th>Chủ đề</th>
-                    <th>Tải xuống</th>
-                    <th>Ghi chú</th>
-                </tr>
+            <div class="table-heading">
+                <p class="table-name">Bảng các video đã được tách</p>
+                <button class="downloadBtn"><a href="{{url_for('download',temp=3)}}">Tải xuống</a></button>
+            </div>
+            <table class="myTable" id="table_no4">
+                <thead>
+                    <tr class="header thead">
+                        <th>STT</th>
+                        <th style="width:30%;">Tên video</th>
+                        <th style="width:30%">Links</th>
+                        <th>Thời gian</th>
+                        <th>Giọng đọc</th>
+                        <th>Vùng miền</th>
+                        <th>Chủ đề</th>
+                        <th>Tải xuống</th>
+                        <th>Ghi chú</th>
+                    </tr>
+                </thead>
                 <tbody id="myTable4">
                 {% for item in splited_videos%}
                     <tr>
@@ -176,7 +198,7 @@
         </div>
 
     </div>
-    <script src="/static/js/jquery_321/jquery-3.2.1.js"></script>
+    
     <script>
         $(document).ready(function() {
             $("#table1").show();
@@ -196,45 +218,8 @@
                 $(".table-container").hide();
                 $("#table4").show();
             })
-            // bảng thống kê chung
-            $('#myInput1').on('keyup', function(event) {
-                event.preventDefault();
-                /* Act on the event */
-                var tukhoa = $(this).val().toLowerCase();
-                $('#myTable1 tr').filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(tukhoa)>-1);
-                });
-            });
-            // bảng các video chưa tải về
-            $('#myInput2').on('keyup', function(event) {
-                event.preventDefault();
-                /* Act on the event */
-                var tukhoa = $(this).val().toLowerCase();
-                $('#myTable2 tr').filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(tukhoa)>-1);
-                });
-            });
 
-            // bảng các video đã tải về
-            $('#myInput3').on('keyup', function(event) {
-                event.preventDefault();
-                /* Act on the event */
-                var tukhoa = $(this).val().toLowerCase();
-                $('#myTable3 tr').filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(tukhoa)>-1);
-                });
-            });
-
-            // bảng các video đã tách
-            $('#myInput4').on('keyup', function(event) {
-                event.preventDefault();
-                /* Act on the event */
-                var tukhoa = $(this).val().toLowerCase();
-                $('#myTable4 tr').filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(tukhoa)>-1);
-                });
-            });
-
+          
             // lưu lại những video đã tải rồi
             $('#saveDownload').click(function(){
                 var filenames= new Array()

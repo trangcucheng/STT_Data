@@ -1,0 +1,40 @@
+@font-face {
+    font-family: "Roboto";
+    src: url('/static/css/fonts/font-family/Quicksand-Medium.ttf');
+}
+
+*{
+    font-family: 'Roboto';
+    box-sizing: border-box;
+    margin: auto;
+    padding: auto;
+}
+
+body{
+    background: url('/static/css/images/bg.jpg') top center;
+    background-size: cover;
+}
+
+div.container{
+    width: 80%;
+    min-height: 1280px;
+}
+
+header{
+    height: 70px;
+    background-color: #008B8B;
+}
+
+button#logout a{
+    color: #000;
+    text-decoration: none;
+}
+
+button#logout{
+    height: 30px;
+    float: right;
+    margin-right: 15px;
+    margin-top: 20px;
+    width: 100px;
+    font-size: 15px;
+}

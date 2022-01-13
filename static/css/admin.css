@@ -10,6 +10,11 @@
     padding: auto;
 }
 
+body{
+    background: url('/static/css/images/bg.jpg') top center;
+    background-size: cover;
+}
+
 header{
     height: 70px;
     background-color: #008B8B;
@@ -30,8 +35,6 @@ ul.options-container li{
 
 div.container{
     width: 80%;
-    background: url('/static/css/images/bg.jpg') top center;
-    background-size: cover;
     min-height: 1280px;
 }
 

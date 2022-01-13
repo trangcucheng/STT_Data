@@ -148,6 +148,7 @@ def saveDownload():
                     num= len(os.listdir(path_to_folder))
                     download_file = path_to_folder+"/"+topic+"_"+str(num)+".mp3"
                     download_audio_from(url,download_file)  # tải về lưu từng file vào từng chủ đề
+                    print("co den day khong")
                     c.execute("update links set status ='yes' where id ={0}".format(id))
                     c.execute("insert into downloaded_audios(original_id,url) values(?,?) ",(id,download_file))
                     conn.commit()
@@ -244,6 +245,7 @@ def each_audio(id):
         c = conn.cursor()
         c.execute("select * from downloaded_audios where original_id ={0}".format(id))
         item = c.fetchone()
+        original_audio_url="/"+item[2]
         original_id = item[1]
         c.execute("select * from links where id ={0}".format(int(original_id)))
         original_audio= c.fetchone()
@@ -256,7 +258,7 @@ def each_audio(id):
         for file in files:
             file_url = "/static/splited_audios/"+folder_name+"/"+file
             file_urls.append(file_url)
-    return render_template("each_audio.html",file_urls = file_urls, original_audio=original_audio, num_files = len(files))
+    return render_template("each_audio.html",file_urls = file_urls, original_audio=original_audio,original_audio_url=original_audio_url, num_files = len(files),item=item)
 
 
 @app.route("/logout")

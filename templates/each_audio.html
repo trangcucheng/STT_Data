@@ -4,20 +4,50 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/each_audio.css">
+    <script src="../static/js/jquery_321/jquery-3.2.1.js"></script>
+    <link rel="stylesheet" href="../static/js/DataTables/datatables.min.css">
+    <script src="../static/js/DataTables/datatables.min.js"></script>
+    <script src="../static/js/DataTables/DataTables-1.11.3/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#myTable').dataTable({});
+        })
+    </script>
     <title>Chi tiết Audio</title>
 </head>
 <body>
+    <header>
+        <button>
+            <a href="{{url_for('logout')}}"><button id="logout">Thoát</button></a>
+        </button>
+        <div class="clearfix"></div>
+    </header>
     <div class="container">
-        <table>
+        <div class="original-audio">
+            <h3 style="margin-top: 30px">Thông tin của audio gốc</h3>
+            <p>Tên audio: {{original_audio[1]}}</p>
+            <p>Thời gian: {{original_audio[3]}}</p>
+            <p>Giọng đọc: {{original_audio[4]}}</p>
+            <p>Vùng miền: {{original_audio[5]}}</p>
+            <p>Chủ đề: {{original_audio[6]}}</p>
+            <p>Nghe thử:</p>
+            <audio controls>
+                <source src="{{original_audio_url}}" type="audio/mpeg">
+            </audio>
+        </div>
+        <table id="myTable" style="width:80%">
             <thead>
-                <th>STT</th>
-                <th>Audios</th>
+                <tr class="thead">
+                    <th style="display: table-cell">STT</th>
+                    <th style="display: table-cell">Audios</th>
+                </tr>
             </thead>
             <tbody>
                 {% for i in range(0, num_files) %}
-                <tr>
-                    <td>{{i}}</td>
-                    <td>
+                <tr class="tbody">
+                    <td style="text-align:center">{{i}}</td>
+                    <td style="text-align:center">
                         <audio controls>
                             <source src="{{file_urls[i]}}" type="audio/mpeg">
                         </audio>

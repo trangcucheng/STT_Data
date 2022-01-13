@@ -72,7 +72,7 @@ c = conn.cursor()
 # ('TIN BÃO SỐ 9: Thủ Tướng Họp Khẩn Cấp Bão số 9 Cực Mạnh sẽ càn quét miền Trung', 'https://www.youtube.com/watch?v=TPZCVFVSxN8', '04:12', 'nu', 'mien_bac', 'thoi_tiet', 4, 'splited')
 # ]
 
-c.execute("select * from topics")
+c.execute("select * from links")
 for i in c.fetchall():
     print(i)
 
